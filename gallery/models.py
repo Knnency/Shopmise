@@ -7,6 +7,14 @@ class ImagePost(models.Model):
         ('Food', 'Food'),
         ('Art', 'Art'),
         ('Lifestyle', 'Lifestyle'),
+        ('Technology', 'Technology'),
+        ('Architecture', 'Architecture'),
+        ('Fashion', 'Fashion'),
+        ('Sports', 'Sports'),
+        ('Animals', 'Animals'),
+        ('People', 'People'),
+        ('Events', 'Events'),
+        ('Business', 'Business'),
         ('Other', 'Other'),
     ]
 

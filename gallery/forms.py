@@ -19,4 +19,7 @@ class ImagePostForm(forms.ModelForm):
                 'placeholder': 'Write a short description...',
                 'rows': 4
             }),
+            'image': forms.ClearableFileInput(attrs={
+                'class': 'form-control'
+            }),
         }
