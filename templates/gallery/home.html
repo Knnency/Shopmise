@@ -1,0 +1,192 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SnapShelf | Modern Image Showcase</title>
+    <link rel="icon" type="image/svg+xml" href="{% static 'gallery/snapshelf-logo.svg' %}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: #f4f1ea;
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+            color: #1f2937;
+        }
+
+        .hero {
+            background: #264653;
+            color: white;
+            padding: 60px 0;
+            border-bottom-left-radius: 30px;
+            border-bottom-right-radius: 30px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.12);
+        }
+
+        .hero h1 {
+            font-weight: 700;
+            font-size: 3rem;
+        }
+
+        .hero p {
+            opacity: 0.95;
+            font-size: 1.1rem;
+        }
+
+        .app-logo {
+            width: 72px;
+            height: 72px;
+            margin-bottom: 10px;
+        }
+
+        .upload-card {
+            border: none;
+            border-radius: 20px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+            margin-top: -50px;
+            background: #ffffff;
+        }
+
+        .upload-card .card-body {
+            padding: 30px;
+        }
+
+        .section-title {
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: #111827;
+        }
+
+        .gallery-card {
+            border: none;
+            border-radius: 18px;
+            overflow: hidden;
+            box-shadow: 0 10px 22px rgba(0,0,0,0.08);
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+            background: #fff;
+            height: 100%;
+        }
+
+        .gallery-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 14px 28px rgba(0,0,0,0.12);
+        }
+
+        .gallery-card img {
+            height: 230px;
+            object-fit: cover;
+            width: 100%;
+        }
+
+        .badge-category {
+            background: #2a9d8f;
+            color: white;
+            border-radius: 30px;
+            padding: 7px 14px;
+            font-size: 0.78rem;
+        }
+
+        .btn-gradient {
+            background: #2a9d8f;
+            color: white;
+            border: none;
+            border-radius: 12px;
+            padding: 12px 20px;
+            font-weight: 600;
+        }
+
+        .btn-gradient:hover {
+            background: #23867a;
+            color: white;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 35px 0 20px;
+            color: #6b7280;
+            font-size: 0.95rem;
+        }
+
+        .empty-box {
+            background: white;
+            border-radius: 18px;
+            padding: 40px;
+            text-align: center;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.07);
+        }
+    </style>
+</head>
+<body>
+
+    <section class="hero text-center">
+        <div class="container">
+            <img src="{% static 'gallery/snapshelf-logo.svg' %}" alt="SnapShelf logo" class="app-logo">
+            <h1>SnapShelf</h1>
+            <p>Upload, organize, and present your best visuals in a professional gallery platform.</p>
+        </div>
+    </section>
+
+    <div class="container pb-5">
+        <div class="card upload-card">
+            <div class="card-body">
+                <h2 class="section-title">Upload New Post</h2>
+                <form method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label class="form-label">Title</label>
+                            {{ form.title }}
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Category</label>
+                            {{ form.category }}
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label">Description</label>
+                            {{ form.description }}
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label">Upload Image</label>
+                            {{ form.image }}
+                        </div>
+                        <div class="col-12">
+                            <button type="submit" class="btn btn-gradient">Publish Image Post</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="mt-5">
+            <h2 class="section-title">Latest Uploads</h2>
+            <div class="row g-4">
+                {% for post in posts %}
+                <div class="col-md-6 col-lg-4">
+                    <div class="card gallery-card">
+                        <img src="{{ post.image.url }}" alt="{{ post.title }}">
+                        <div class="card-body">
+                            <span class="badge-category">{{ post.category }}</span>
+                            <h4 class="mt-3">{{ post.title }}</h4>
+                            <p class="text-muted">{{ post.description }}</p>
+                            <small class="text-secondary">Uploaded on {{ post.created_at|date:"F d, Y - h:i A" }}</small>
+                        </div>
+                    </div>
+                </div>
+                {% empty %}
+                <div class="col-12">
+                    <div class="empty-box">
+                        <h4>No image posts yet</h4>
+                        <p class="text-muted mb-0">Start by uploading your first professional showcase image.</p>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="footer">
+            SnapShelf Django Project • Deployed on Render with PostgreSQL, WhiteNoise, and Media Storage
+        </div>
+    </div>
+
+</body>
+</html>
