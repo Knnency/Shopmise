@@ -1,4 +1,4 @@
-# SnapShelf
+# ShopMise
 
 A modern Django image showcase app where users can upload, categorize, search, and display visual posts in a clean gallery interface.
 
@@ -45,8 +45,8 @@ snapshelf/
 
 1. Clone the repo
 ```bash
-git clone https://github.com/richald03/Snapshelf.git
-cd Snapshelf
+git clone https://github.com/richald03/ShopMise.git
+cd ShopMise
 ```
 
 2. Create and activate virtual environment
